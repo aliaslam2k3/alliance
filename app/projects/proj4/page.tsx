@@ -29,7 +29,8 @@ export default function Project4() {
       
       <section className="relative h-[70vh] flex items-center justify-center bg-brand-black">
         <div className="absolute inset-0">
-          <Image src="/images/proj4.png" alt="Nadia Textiles, Lahore" fill className="object-cover opacity-60" />
+          <Image src="/images/proj4.png" alt="Nadia Textiles, Lahore" fill className="object-cover" />
+          <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-4xl px-4">
           <h1 className="text-6xl font-playfair font-bold mb-4">Nadia Textiles, Lahore</h1>

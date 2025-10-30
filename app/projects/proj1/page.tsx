@@ -41,8 +41,9 @@ export default function Project1() {
             src="/images/proj1.png"
             alt="LACAS School Network, Johar Town Branch"
             fill
-            className="object-cover opacity-60"
+            className="object-cover"
           />
+          <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
         
         <div className="relative z-10 text-center text-white max-w-4xl px-4">

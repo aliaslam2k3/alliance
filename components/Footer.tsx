@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,15 +6,12 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
           {/* About Us */}
-          <div className="reveal">
+          <div>
             <div className="mb-6">
-              <Image 
+              <img 
                 src="/images/logo-removebg-preview.png" 
                 alt="Alliance Engineers" 
-                width={48} 
-                height={48}
                 className="h-12 w-auto mb-4"
-                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
             <h3 className="text-xl font-bold mb-6">About Us</h3>
@@ -25,7 +21,7 @@ export default function Footer() {
           </div>
           
           {/* Quick Links */}
-          <div className="reveal">
+          <div>
             <h3 className="text-xl font-bold mb-6">Quick Links</h3>
             <div className="space-y-3">
               <Link href="/" className="block text-gray-400 hover:text-brand-blue transition-colors text-sm">Home</Link>
@@ -36,33 +32,33 @@ export default function Footer() {
           </div>
           
           {/* Latest Works */}
-          <div className="reveal">
+          <div>
             <h3 className="text-xl font-bold mb-6">Latest Works</h3>
             <div className="grid grid-cols-2 gap-4">
-              <Image src="/images/proj1.png" alt="Project 1" width={100} height={80} className="w-full h-20 object-cover rounded" style={{ width: 'auto', height: 'auto' }} />
-              <Image src="/images/proj2.png" alt="Project 2" width={100} height={80} className="w-full h-20 object-cover rounded" style={{ width: 'auto', height: 'auto' }} />
-              <Image src="/images/proj3.png" alt="Project 3" width={100} height={80} className="w-full h-20 object-cover rounded" style={{ width: 'auto', height: 'auto' }} />
-              <Image src="/images/proj4.png" alt="Project 4" width={100} height={80} className="w-full h-20 object-cover rounded" style={{ width: 'auto', height: 'auto' }} />
-              <Image src="/images/proj5.png" alt="Project 5" width={100} height={80} className="w-full h-20 object-cover rounded" style={{ width: 'auto', height: 'auto' }} />
-              <Image src="/images/proj6.png" alt="Project 6" width={100} height={80} className="w-full h-20 object-cover rounded" style={{ width: 'auto', height: 'auto' }} />
+              <img src="/images/proj1.png" alt="Project 1" className="w-full h-20 object-cover rounded" />
+              <img src="/images/proj2.png" alt="Project 2" className="w-full h-20 object-cover rounded" />
+              <img src="/images/proj3.png" alt="Project 3" className="w-full h-20 object-cover rounded" />
+              <img src="/images/proj4.png" alt="Project 4" className="w-full h-20 object-cover rounded" />
+              <img src="/images/proj5.png" alt="Project 5" className="w-full h-20 object-cover rounded" />
+              <img src="/images/proj6.png" alt="Project 6" className="w-full h-20 object-cover rounded" />
             </div>
           </div>
           
           {/* Contact Info */}
-          <div className="reveal">
+          <div>
             <h3 className="text-xl font-bold mb-6">Contact Info</h3>
             <div className="space-y-4">
-              <div className="flex items-center">
-                <i className="fas fa-map-marker-alt text-brand-yellow mr-3"></i>
-                <span className="text-gray-400">12Km Raiwind Road, Lahore</span>
+              <div className="flex items-start">
+                <i className="fas fa-map-marker-alt text-brand-yellow mr-3 mt-1"></i>
+                <span className="text-gray-400 text-sm">12Km Raiwind Road, Lahore</span>
               </div>
               <div className="flex items-center">
                 <i className="fas fa-phone text-brand-yellow mr-3"></i>
-                <span className="text-gray-400">+92 42 35459444</span>
+                <span className="text-gray-400 text-sm">+92 42 35459444</span>
               </div>
               <div className="flex items-center">
                 <i className="fas fa-envelope text-brand-yellow mr-3"></i>
-                <span className="text-gray-400">alliance477@gmail.com</span>
+                <span className="text-gray-400 text-sm">alliance477@gmail.com</span>
               </div>
               <div className="flex space-x-4 mt-6">
                 <a href="#" className="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center hover:bg-white transition-colors text-brand-black">

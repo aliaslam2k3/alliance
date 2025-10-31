@@ -24,8 +24,52 @@ export default function About() {
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll(); // Check on load
 
+    // Counter animation
+    const counters = document.querySelectorAll('.stats-counter');
+    let hasAnimated = false;
+
+    const animateCounters = () => {
+      counters.forEach(counter => {
+        const elementTop = counter.getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < window.innerHeight - elementVisible && !hasAnimated) {
+          const target = parseInt(counter.getAttribute('data-target') || '0');
+          const duration = 2000; // 2 seconds
+          const increment = target / (duration / 16); // 60fps
+          let current = 0;
+
+          const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+              counter.textContent = Math.ceil(current).toString();
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.textContent = target.toString();
+            }
+          };
+
+          updateCounter();
+        }
+      });
+      
+      // Check if any counter is visible, if so mark as animated
+      const firstCounter = counters[0];
+      if (firstCounter) {
+        const elementTop = firstCounter.getBoundingClientRect().top;
+        const elementVisible = 150;
+        if (elementTop < window.innerHeight - elementVisible) {
+          hasAnimated = true;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', animateCounters);
+    animateCounters(); // Check on load
+
     return () => {
       window.removeEventListener('scroll', revealOnScroll);
+      window.removeEventListener('scroll', animateCounters);
     };
   }, []);
 
@@ -48,10 +92,10 @@ export default function About() {
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <div className="reveal">
             <h1 className="text-4xl md:text-6xl font-playfair font-bold mb-6 leading-tight">
-              About Alliance Engineers
+              About Us
             </h1>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Building excellence since 1993
+              We build on time, on budget, and with uncompromising quality.
             </p>
           </div>
         </div>
@@ -72,96 +116,130 @@ export default function About() {
             </div>
             
             <div className="reveal">
-              <h4 className="text-lg font-semibold text-brand-navy mb-4 tracking-widest">OUR STORY</h4>
               <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
-                Three Decades of Excellence
+                Our Story
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Founded in 1993, Alliance Engineers & Contractors has grown from a small construction company to one of Pakistan's most trusted engineering firms. Our journey began with a simple mission: to deliver quality construction projects on time, every time.
+                Alliance Engineers & Contractors is a trusted name in civil engineering and construction, delivering excellence for more than two decades. With a strong presence across Pakistan—particularly in Punjab and the capital region—we specialize in providing high-quality, on-time, and cost-effective solutions for both public and private sector projects.
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                Our foundation is built on integrity, professionalism, and innovation. We combine advanced construction techniques with strict safety and quality standards to ensure every project meets the highest benchmarks of performance and reliability.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                Over the years, we have successfully completed over 150 projects across Pakistan, ranging from residential complexes to large-scale industrial facilities. Our commitment to excellence, innovation, and client satisfaction has made us a preferred partner for both private and government organizations.
+                Backed by a team of skilled professionals, we take pride in creating structures that not only fulfill immediate needs but also contribute to long-term community development and economic growth. At Alliance Engineers & Contractors, we aim to establish lasting partnerships and deliver results that inspire confidence.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* What We Value Section */}
       <section className="section-padding bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 reveal">
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">Our Core Values</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              The principles that guide everything we do
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center reveal card-hover">
-              <div className="w-20 h-20 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-6">
-                <i className="fas fa-gem text-white text-2xl"></i>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Quality</h3>
-              <p className="text-gray-600 leading-relaxed">
-                We never compromise on quality. Every project is executed with the highest standards, using premium materials and proven construction techniques.
-              </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="reveal">
+              <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-8">
+                What We Value
+              </h2>
+              <ul className="space-y-4 text-lg">
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Integrity and Trust</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Quality and Safety</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Innovation and Technology</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Sustainability</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Client-Centered Approach</span>
+                </li>
+              </ul>
             </div>
-            
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center reveal card-hover">
-              <div className="w-20 h-20 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-6">
-                <i className="fas fa-clock text-white text-2xl"></i>
+
+            <div className="reveal">
+              <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-8">
+                Mission & Vision
+              </h2>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-brand-navy mb-4">Mission</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">
+                  To deliver innovative, reliable, and sustainable construction solutions that exceed client expectations.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Timeliness</h3>
-              <p className="text-gray-600 leading-relaxed">
-                We understand the importance of deadlines. Our project management expertise ensures timely delivery without compromising on quality.
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center reveal card-hover">
-              <div className="w-20 h-20 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-6">
-                <i className="fas fa-shield-alt text-white text-2xl"></i>
+              <div>
+                <h3 className="text-2xl font-bold text-brand-navy mb-4">Vision</h3>
+                <p className="text-gray-600 text-lg leading-relaxed">
+                  To be Pakistan's most trusted engineering partner, building not just structures but lasting value and partnerships.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Safety</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Safety is our top priority. We maintain strict safety protocols and ensure all our workers and sites meet the highest safety standards.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Our Expertise Section */}
       <section className="section-padding">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 reveal">
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">Our Leadership</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Meet the visionaries behind our success
+          <div className="text-center mb-12 reveal">
+            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
+              Our Expertise
+            </h2>
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
+              From infrastructure and industrial projects to commercial and residential developments, we combine skilled teams with modern technology to deliver excellence across every sector.
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="section-padding bg-brand-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
               <Image 
-                src="/images/ceo.jpeg" 
-                alt="CEO" 
-                width={400} 
-                height={500}
+                src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80" 
+                alt="Our Team" 
+                width={600} 
+                height={400}
                 className="w-full rounded-lg shadow-lg"
               />
             </div>
             
             <div className="reveal">
-              <h4 className="text-lg font-semibold text-brand-navy mb-4 tracking-widest">LEADERSHIP</h4>
-              <h3 className="text-3xl font-playfair font-bold mb-4">Rana Muhammad Naeem</h3>
-              <p className="text-brand-navy font-semibold text-lg mb-6">Chief Executive Officer</p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                With over 25 years of experience in the construction industry, Rana Muhammad Naeem has been instrumental in shaping Alliance Engineers & Contractors into the trusted company it is today. His vision of delivering quality projects on time has been the driving force behind our success.
-              </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                Under his leadership, we have expanded our operations across Pakistan and built lasting relationships with clients from various sectors. His commitment to innovation and excellence continues to guide our company forward.
-              </p>
+              <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-8">
+                Why Choose Us
+              </h2>
+              <ul className="space-y-4 text-lg">
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">20+ years of proven experience</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Nationwide project delivery</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Cutting-edge tools and techniques</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Strong track record of timely and safe execution</span>
+                </li>
+                <li className="flex items-start">
+                  <i className="fas fa-check-circle text-brand-yellow text-2xl mr-4 mt-1"></i>
+                  <span className="text-gray-700">Long-term commitment to communities and clients</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -179,7 +257,7 @@ export default function About() {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center reveal">
-              <div className="stats-counter mb-2" data-target="30">0</div>
+              <div className="stats-counter mb-2" data-target="20">0</div>
               <p className="text-gray-600 font-medium">Years Experience</p>
             </div>
             <div className="text-center reveal">

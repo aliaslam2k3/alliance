@@ -84,7 +84,7 @@ export default function HeroCarousel() {
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
             Turning ideas into lasting structures with precision, innovation, and trust
           </p>
-          <Link href="/projects" className="btn-primary text-white px-8 py-4 rounded-full font-semibold text-lg inline-block">
+          <Link href="/projects" className="btn-primary text-black px-8 py-4 rounded-full font-semibold text-lg inline-block">
             View Projects
           </Link>
         </div>

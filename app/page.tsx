@@ -12,7 +12,7 @@ import { db } from '../lib/firebase';
 import { useAuth } from '../lib/AuthContext';
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, userData } = useAuth();
   const [quoteForm, setQuoteForm] = useState({
     firstName: '',
     lastName: '',
@@ -24,6 +24,18 @@ export default function Home() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
+
+  // Pre-fill form if user is logged in
+  useEffect(() => {
+    if (userData && userData.firstName && userData.lastName) {
+      setQuoteForm(prev => ({
+        ...prev,
+        firstName: userData.firstName || '',
+        lastName: userData.lastName || '',
+        email: userData.email || ''
+      }));
+    }
+  }, [userData]);
 
   const handleQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

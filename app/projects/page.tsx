@@ -1,64 +1,23 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import ClientMarquee from '../../components/ClientMarquee';
-
-const projects = [
-  {
-    id: 1,
-    title: "LACAS School Network",
-    category: "Commercial",
-    image: "/images/proj1.png",
-    description: "Johar Town Branch - A state-of-the-art educational facility featuring modern design and sustainable construction.",
-    link: "/projects/proj1"
-  },
-  {
-    id: 2,
-    title: "Shalimar Paper Mill",
-    category: "Industrial",
-    image: "/images/proj2.png",
-    description: "Lahore - Large-scale industrial facility designed for maximum efficiency and operational excellence.",
-    link: "/projects/proj2"
-  },
-  {
-    id: 3,
-    title: "Government House",
-    category: "Residential",
-    image: "/images/proj3.png",
-    description: "Murree - Prestigious residential complex featuring luxury finishes and premium amenities.",
-    link: "/projects/proj3"
-  },
-  {
-    id: 4,
-    title: "Nadia Textiles",
-    category: "Industrial",
-    image: "/images/proj4.png",
-    description: "Lahore - Modern textile manufacturing facility with advanced infrastructure and technology integration.",
-    link: "/projects/proj4"
-  },
-  {
-    id: 5,
-    title: "Shabbir Town",
-    category: "Commercial",
-    image: "/images/proj5.png",
-    description: "Lahore - Mixed-use commercial development featuring retail spaces and modern office facilities.",
-    link: "/projects/proj5"
-  },
-  {
-    id: 6,
-    title: "Government Boys School",
-    category: "Commercial",
-    image: "/images/proj6.png",
-    description: "Bagh AJK - Educational facility designed for optimal learning environment and student safety.",
-    link: "/projects/proj6"
-  }
-];
+import { getPortfolioProjects } from '../../lib/projects';
+import { Project } from '../../lib/types';
 
 export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
   useEffect(() => {
     // Scroll reveal animation
     const reveals = document.querySelectorAll('.reveal');
@@ -80,7 +39,21 @@ export default function Projects() {
     return () => {
       window.removeEventListener('scroll', revealOnScroll);
     };
-  }, []);
+  }, [projects]);
+
+  const fetchProjects = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const portfolioProjects = await getPortfolioProjects();
+      setProjects(portfolioProjects);
+    } catch (err) {
+      console.error('Error fetching projects:', err);
+      setError('Failed to load projects. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="font-inter bg-white text-gray-800">
@@ -117,32 +90,53 @@ export default function Projects() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <Link 
-                key={project.id} 
-                href={project.link}
-                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 block"
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-brand-yellow mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading projects...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-600 mb-4">{error}</p>
+              <button
+                onClick={fetchProjects}
+                className="btn-primary text-white px-6 py-3 rounded-lg font-semibold"
               >
-                <div className="relative overflow-hidden h-64 bg-gray-200 group">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-all duration-300 flex items-center justify-center">
-                    <span className="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">View Details</span>
+                Try Again
+              </button>
+            </div>
+          ) : projects.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">No projects available at the moment.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <Link 
+                  key={project.id} 
+                  href={`/projects/${project.id}`}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 block reveal"
+                >
+                  <div className="relative overflow-hidden h-64 bg-gray-200 group">
+                    <img 
+                      src={project.image || "/images/proj1.png"} 
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-all duration-300 flex items-center justify-center">
+                      <span className="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">View Details</span>
+                    </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-brand-yellow font-semibold mb-3">{project.category}</p>
-                  <p className="text-gray-600 text-sm">{project.description}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                    <p className="text-brand-yellow font-semibold mb-3">{project.category}</p>
+                    <p className="text-gray-600 text-sm">{project.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

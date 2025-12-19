@@ -387,4 +387,24 @@ body {
   .close:hover {
     color: #000;
   }
+
+  /* Ensure modal headers have proper styling */
+  .modal-content > div:first-child {
+    position: relative;
+  }
+
+  .modal-content .bg-brand-navy,
+  .modal-content .bg-red-600 {
+    color: white !important;
+  }
+
+  .modal-content .bg-brand-navy button,
+  .modal-content .bg-red-600 button {
+    color: white !important;
+  }
+
+  .modal-content .bg-brand-navy button:hover,
+  .modal-content .bg-red-600 button:hover {
+    color: #e6c200 !important;
+  }
 }
